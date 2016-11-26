@@ -1,13 +1,14 @@
-import add from './src/js/calc.js';
-import Animation, { Index, Page1, Page2 } from './src/js/animation';
+import React, { PropTypes } from 'react';
 import ReactTransitionGroup from 'react/lib/ReactTransitionGroup';
-import React from 'react';
 import { browserHistory, Router, Route, IndexRoute, Link } from 'react-router';
 import reactDom from 'react-dom';
 
-const foo = [1];
-const bar = [10];
-console.log(add(...[...foo, ...bar]));
+import { Index, Page1, Page2 } from './src/js/pages';
+
+const propTypes = {
+  children: PropTypes.node,
+  location: PropTypes.object,
+};
 
 const App = ({ children, location }) => (
   <div>
@@ -23,6 +24,8 @@ const App = ({ children, location }) => (
     </ReactTransitionGroup>
   </div>
 );
+
+App.propTypes = propTypes;
 
 reactDom.render((
   <Router history={browserHistory}>
