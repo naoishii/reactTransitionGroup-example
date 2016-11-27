@@ -22,6 +22,7 @@ const App = ({ children, location }) => (
         key: location.pathname,
       })}
     </ReactTransitionGroup>
+
   </div>
 );
 
