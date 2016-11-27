@@ -6,19 +6,24 @@ import Matter from 'matter-js';
 const Bodies = Matter.Bodies;
 const World = Matter.World;
 const Engine = Matter.Engine;
+const Render = Matter.Render;
 
 class Physical extends React.Component {
   componentDidMount() {
     // create a Matter.js engine
-    const engine = Engine.create(reactDom.findDOMNode(this), {
-      render: {
-        options: {
-          wireframes: false,
-          width: 500, // canvasの横幅
-          height: 500, // canvasの高さ
-        },
+    const engine = Engine.create();
+    Engine.run(engine);
+    const renderer = Render.create({
+      element: reactDom.findDOMNode(this),
+      engine,
+      options: {
+        wireframes: false,
+        width: 500, // canvasの横幅
+        height: 500, // canvasの高さ
       },
     });
+
+    Render.run(renderer);
 
     this.setState({
       engine,

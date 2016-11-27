@@ -8,7 +8,7 @@ h.id = 'hoge';
 h.style.display = 'none';
 h.style.position = 'fixed';
 h.style.top = '0';
-h.style.margin = '0 50%';
+//h.style.margin = '0 50%';
 body.appendChild(h);
 
 class Animation extends React.Component {
