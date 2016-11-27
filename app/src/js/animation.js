@@ -1,6 +1,6 @@
 import React from 'react';
 import reactDom from 'react-dom';
-import Loading from './example';
+import Loading from './matter';
 
 const body = document.querySelector('body');
 const h = document.createElement('div');
@@ -21,7 +21,7 @@ class Animation extends React.Component {
     reactDom.render(<Loading />, h);
     h.style.display = 'block';
     setTimeout(done, 1000);
-    console.log('enter', hoge);
+    console.log('enter');
   }
   componentDidEnter() {
     // const body = document.querySelector('body');
