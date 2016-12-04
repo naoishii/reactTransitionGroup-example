@@ -20,6 +20,8 @@ class Physical extends React.Component {
         wireframes: false,
         width: 500, // canvasの横幅
         height: 500, // canvasの高さ
+        background: '0% 0% / contain rgba(255, 255, 255, 0)',
+        opacity: 0.2,
       },
     });
 
@@ -42,9 +44,13 @@ class Physical extends React.Component {
       restitution: 0.2, // 弾力性
       friction: 0.001, // 摩擦
       name: 'coin',
+      render: {
+        opacity: 1,
+      },
     });
+    const ground = Bodies.rectangle(200, 200, 400, 20, { isStatic: true, name: 'hell' });
 
-    World.add(engine.world, [circleA]);
+    World.add(engine.world, [circleA, ground]);
     // run the engine
     Engine.run(engine);
   }
