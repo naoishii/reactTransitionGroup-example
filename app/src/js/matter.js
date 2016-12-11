@@ -8,6 +8,9 @@ const World = Matter.World;
 const Engine = Matter.Engine;
 const Render = Matter.Render;
 
+const baseHeight = window.innerHeight;
+const baseWidth = window.innerWidth;
+
 class Physical extends React.Component {
   componentDidMount() {
     // create a Matter.js engine
@@ -18,14 +21,20 @@ class Physical extends React.Component {
       engine,
       options: {
         wireframes: false,
-        width: 500, // canvasの横幅
-        height: 500, // canvasの高さ
+        width: baseWidth, // canvasの横幅
+        height: baseHeight, // canvasの高さ
         background: '0% 0% / contain rgba(255, 255, 255, 0)',
         opacity: 0.2,
       },
     });
 
     Render.run(renderer);
+
+    const ground = Bodies.rectangle(baseWidth / 2, baseHeight, baseWidth, 20, { isStatic: true, name: 'ground' });
+    const wallL = Bodies.rectangle(0, baseHeight / 2, 20, baseHeight, { isStatic: true, name: 'ground' });
+    const wallR = Bodies.rectangle(baseWidth, baseHeight / 2, 20, baseHeight, { isStatic: true, name: 'ground' });
+
+    World.add(engine.world, [wallL, wallR, ground]);
 
     this.setState({
       engine,
@@ -38,19 +47,28 @@ class Physical extends React.Component {
       engine,
     } = this.state;
     console.log(engine);
-    const circleA = Bodies.circle(300, 0, 20, {
-      density: 0.001, // 質量
-      frictionAir: 0.01, // 空気抵抗
-      restitution: 0.2, // 弾力性
-      friction: 0.001, // 摩擦
-      name: 'coin',
-      render: {
-        opacity: 1,
-      },
-    });
-    const ground = Bodies.rectangle(200, 200, 400, 20, { isStatic: true, name: 'hell' });
+    const circles = [];
+    for(let i = 0; i < 20; i++) {
+      circles.push(
+        Bodies.circle(
+          Math.random() * 1000 % baseWidth,
+          0 - Math.random() * 100 % 100,
+          40, {
+            density: 0.001, // 質量
+            frictionAir: 0.01, // 空気抵抗
+            restitution: 0, // 弾力性
+            friction: 0.1, // 摩擦
+            name: 'coin',
+            render: {
+              opacity: 1,
+            },
+          }
+        )
+      );
+    }
+    const ground = Bodies.rectangle(baseWidth / 2, baseHeight, baseWidth, 20, { isStatic: true, name: 'ground' });
 
-    World.add(engine.world, [circleA, ground]);
+    World.add(engine.world, circles);
     // run the engine
     Engine.run(engine);
   }
