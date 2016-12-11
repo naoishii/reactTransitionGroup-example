@@ -71,6 +71,7 @@ class Physical extends React.Component {
     World.add(engine.world, circles);
     // run the engine
     Engine.run(engine);
+    console.log(World);
   }
 
   render() {
