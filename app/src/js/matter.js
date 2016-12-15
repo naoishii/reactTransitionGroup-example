@@ -11,14 +11,12 @@ const Render = Matter.Render;
 const baseHeight = window.innerHeight;
 const baseWidth = window.innerWidth;
 
-class Physical extends React.Component {
-  componentDidMount() {
-    // create a Matter.js engine
-    const engine = Engine.create();
-    Engine.run(engine);
-    const renderer = Render.create({
-      element: reactDom.findDOMNode(this),
-      engine,
+export default class BallPool {
+  constructor(element) {
+    this.engine = Engine.create();
+    this.renderer = Render.create({
+      element: element, // todo
+      engine: this.engine,
       options: {
         wireframes: false,
         width: baseWidth, // canvasの横幅
@@ -28,55 +26,92 @@ class Physical extends React.Component {
       },
     });
 
-    Render.run(renderer);
+    const staticRenderOptions = {
+      opacity: 0,
+    };
+    this.ground = Bodies.rectangle(
+      baseWidth / 2,
+      baseHeight,
+      baseWidth,
+      20,
+      { isStatic: true, name: 'ground', render: staticRenderOptions }
+    );
+    this.wallL = Bodies.rectangle(
+      0,
+      baseHeight / 2,
+      20,
+      baseHeight,
+      { isStatic: true, name: 'wallL', render: staticRenderOptions }
+    );
+    this.wallR = Bodies.rectangle(
+      baseWidth,
+      baseHeight / 2,
+      20,
+      baseHeight,
+      { isStatic: true, name: 'wallR', render: staticRenderOptions }
+    );
+    
+    this.ballCount = 0;
 
-    const ground = Bodies.rectangle(baseWidth / 2, baseHeight, baseWidth, 20, { isStatic: true, name: 'ground' });
-    const wallL = Bodies.rectangle(0, baseHeight / 2, 20, baseHeight, { isStatic: true, name: 'ground' });
-    const wallR = Bodies.rectangle(baseWidth, baseHeight / 2, 20, baseHeight, { isStatic: true, name: 'ground' });
-
-    World.add(engine.world, [wallL, wallR, ground]);
-
-    this.setState({
-      engine,
-    });
+    Engine.run(this.engine);
+    Render.run(this.renderer);
   }
 
-  componentDidUpdate() {
-    console.log('matter');
+  initWorld() {
     const {
       engine,
-    } = this.state;
-    console.log(engine);
+      wallL,
+      wallR,
+      ground,
+    } = this;
+
+    World.add(engine.world, [wallL, wallR, ground]);
+    console.log('init');
+  }
+
+  resetWorld() {
+    const {
+      engine,
+      ground,
+    } = this;
+
+    World.remove(engine.world, ground);
+    setTimeout(() => {
+      World.remove(engine.world, engine.world.bodies);
+      this.ballCount = 0;
+      this.initWorld(); 
+    }, 1000)
+  }
+
+  update() {
+    const {
+      engine,
+    } = this;
     const circles = [];
+
+    if (this.ballCount > 100) {
+      this.resetWorld();
+      return;
+    }
+
     for(let i = 0; i < 20; i++) {
       circles.push(
-        Bodies.circle(
-          Math.random() * 1000 % baseWidth,
-          0 - Math.random() * 100 % 100,
-          40, {
-            density: 0.001, // 質量
-            frictionAir: 0.01, // 空気抵抗
-            restitution: 0, // 弾力性
-            friction: 0.1, // 摩擦
-            name: 'coin',
-            render: {
-              opacity: 1,
-            },
-          }
-        )
+        Bodies.circle(Math.random() * 1000 % baseWidth, 0 - Math.random() * 100 % 100, 40, {
+          density: 0.001, // 質量
+          frictionAir: 0.001, // 空気抵抗
+          restitution: 0, // 弾力性
+          friction: 0.1, // 摩擦
+          name: 'coin',
+          render: {
+            opacity: 1,
+          },
+        })
       );
     }
-    const ground = Bodies.rectangle(baseWidth / 2, baseHeight, baseWidth, 20, { isStatic: true, name: 'ground' });
+
+    // xxx
+    this.ballCount += circles.length;
 
     World.add(engine.world, circles);
-    // run the engine
-    Engine.run(engine);
-    console.log(World);
-  }
-
-  render() {
-    return <div />;
   }
 }
-
-export default Physical;
