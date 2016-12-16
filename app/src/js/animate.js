@@ -23,7 +23,7 @@ export default function animate(Component) {
       ballPool.update();
       h.style.display = 'block';
       setTimeout(done, 1000);
-      console.log('enter');
+      console.log('will enter');
     }
 
     componentDidEnter() {
