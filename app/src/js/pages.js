@@ -1,17 +1,16 @@
 import React from 'react';
-import Animation from './animation';
 
-export class Index extends Animation {
+export class Index extends React.Component {
   render() {
     return (
       <div className="Image">
         <h1>Index</h1>
-        <p>Animations with React Router are not different than any other animation.</p>
+        <p>React.Components with React Router are not different than any other animation.</p>
       </div>
     );
   }
 }
-export class Page1 extends Animation {
+export class Page1 extends React.Component {
   render() {
     return (
       <div className="Image">
@@ -21,7 +20,7 @@ export class Page1 extends Animation {
     );
   }
 }
-export class Page2 extends Animation {
+export class Page2 extends React.Component {
   render() {
     return (
       <div className="Image">
@@ -31,4 +30,3 @@ export class Page2 extends Animation {
     );
   }
 }
-
