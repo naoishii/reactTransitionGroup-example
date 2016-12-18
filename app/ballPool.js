@@ -12,7 +12,7 @@ export default class BallPool {
   constructor(element) {
     this.engine = Engine.create();
     this.renderer = Render.create({
-      element, // todo
+      element,
       engine: this.engine,
       options: {
         wireframes: false,
@@ -92,7 +92,7 @@ export default class BallPool {
           frictionAir: 0.001, // 空気抵抗
           restitution: 0, // 弾力性
           friction: 0.1, // 摩擦
-          name: 'coin',
+          name: 'ball',
           render: {
             opacity: 1,
           },
