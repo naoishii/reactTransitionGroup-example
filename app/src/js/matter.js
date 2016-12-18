@@ -85,12 +85,7 @@ export default class BallPool {
     } = this;
     const circles = [];
 
-    if (this.ballCount > 100) {
-      this.resetWorld();
-      return;
-    }
-
-    for (let i = 0; i < 20; i += 1) {
+    for (let i = 0; i < 30; i += 1) {
       circles.push(
         Bodies.circle((Math.random() * 1000) % baseWidth, 0 - ((Math.random() * 100) % 100), 40, {
           density: 0.001, // 質量
@@ -109,5 +104,9 @@ export default class BallPool {
     this.ballCount += circles.length;
 
     World.add(engine.world, circles);
+
+    if (this.ballCount > 100) {
+      this.resetWorld();
+    }
   }
 }
