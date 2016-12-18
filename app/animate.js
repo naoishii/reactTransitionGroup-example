@@ -1,5 +1,5 @@
 import React from 'react';
-import BallPool from './matter';
+import BallPool from './ballPool';
 
 const body = document.querySelector('body');
 const h = document.createElement('div');
