@@ -3,8 +3,8 @@ import ReactTransitionGroup from 'react/lib/ReactTransitionGroup';
 import { browserHistory, Router, Route, IndexRoute, Link } from 'react-router';
 import reactDom from 'react-dom';
 
-import { Index, Page1, Page2 } from './src/js/pages';
-import animate from './src/js/animate';
+import { Index, Page1, Page2 } from './pages';
+import animate from './animate';
 
 const AnimatedIndex = animate(Index);
 const AnimatedPage1 = animate(Page1);
