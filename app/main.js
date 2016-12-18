@@ -35,7 +35,7 @@ App.propTypes = propTypes;
 
 reactDom.render((
   <Router history={browserHistory}>
-    <Route path="/" component={App}>
+    <Route path="/rr-wip" component={App}>
       <IndexRoute component={AnimatedIndex} />
       <Route path="page1" component={AnimatedPage1} />
       <Route path="page2" component={AnimatedPage2} />
